@@ -1,0 +1,272 @@
+/* Ghibli-inspired custom styles and animations */
+
+/* Watercolor effect for backgrounds */
+.watercolor-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.watercolor-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 10% 20%, rgba(184, 230, 213, 0.4) 0%, transparent 40%),
+    radial-gradient(ellipse at 90% 70%, rgba(168, 216, 240, 0.3) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 212, 184, 0.2) 0%, transparent 50%);
+  filter: blur(40px);
+  z-index: -1;
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Cat ear shape for AI messages */
+.cat-ear {
+  position: relative;
+}
+
+.cat-ear::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 12px solid currentColor;
+  filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Paw print button decoration */
+.paw-print {
+  display: inline-block;
+  position: relative;
+  margin-right: 8px;
+}
+
+.paw-print::after {
+  content: '🐾';
+  font-size: 1.2em;
+}
+
+/* Soft shadow effect (like watercolor) */
+.soft-shadow {
+  box-shadow: 
+    0 2px 8px rgba(184, 230, 213, 0.3),
+    0 8px 16px rgba(168, 216, 240, 0.2),
+    0 16px 32px rgba(255, 212, 184, 0.1);
+}
+
+.soft-shadow-hover {
+  transition: all 0.4s ease;
+}
+
+.soft-shadow-hover:hover {
+  box-shadow: 
+    0 4px 12px rgba(184, 230, 213, 0.4),
+    0 12px 24px rgba(168, 216, 240, 0.3),
+    0 24px 48px rgba(255, 212, 184, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Typing indicator animation */
+.typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: typing-bounce 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Soft fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Message bubble animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message-user {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.message-ai {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+/* Soot sprite loading animation */
+.soot-sprite {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333 0%, #666 100%);
+  position: relative;
+  animation: soot-bounce 0.6s ease-in-out infinite alternate;
+}
+
+.soot-sprite::before,
+.soot-sprite::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  top: 12px;
+}
+
+.soot-sprite::before {
+  left: 10px;
+}
+
+.soot-sprite::after {
+  right: 10px;
+}
+
+@keyframes soot-bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-15px) scale(1.1);
+  }
+}
+
+/* Gradient text for headers */
+.ghibli-gradient-text {
+  background: linear-gradient(135deg, #8FBC8F 0%, #B8E6D5 50%, #A8D8F0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Decorative whiskers */
+.whiskers {
+  position: relative;
+}
+
+.whiskers::before,
+.whiskers::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 30px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0.3;
+  top: 50%;
+}
+
+.whiskers::before {
+  left: -35px;
+}
+
+.whiskers::after {
+  right: -35px;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, input, textarea {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
