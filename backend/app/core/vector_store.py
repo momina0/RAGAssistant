@@ -99,7 +99,16 @@ class VectorStoreManager:
         
         try:
             logger.info(f"Searching for similar documents with query: '{query[:50]}...'")
-            results = self.vector_store.similarity_search(query, k=k)
+            
+            # Use similarity_search_with_score to see match quality
+            results_with_scores = self.vector_store.similarity_search_with_score(query, k=k)
+            
+            # Log the scores for debugging
+            for i, (doc, score) in enumerate(results_with_scores):
+                logger.info(f"  Result {i+1}: Score={score:.4f}, Content preview: {doc.page_content[:100]}...")
+            
+            # Extract just the documents (without scores)
+            results = [doc for doc, score in results_with_scores]
             logger.info(f"Found {len(results)} similar documents")
             return results
         except Exception as e:

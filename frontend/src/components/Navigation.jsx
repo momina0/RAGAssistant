@@ -1,6 +1,6 @@
 /**
  * Navigation Component
- * Header navigation bar with Ghibli theme
+ * Header navigation bar
  */
 
 import React from 'react';
@@ -12,13 +12,12 @@ const Navigation = () => {
   const isActive = (path) => location.pathname === path;
   
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-ghibli-sage/20 shadow-md">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Title */}
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="text-3xl transition-transform group-hover:scale-110">🐱</span>
-            <h1 className="text-2xl font-bold ghibli-gradient-text">
+            <h1 className="text-2xl font-bold text-teal-700">
               Smart AI Assistant
             </h1>
           </Link>
@@ -29,21 +28,21 @@ const Navigation = () => {
               to="/"
               className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
                 isActive('/') 
-                  ? 'bg-ghibli-sage text-white shadow-lg' 
-                  : 'bg-white text-gray-700 hover:bg-ghibli-cream shadow-md'
+                  ? 'bg-teal-600 text-white shadow-lg' 
+                  : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md border border-gray-200'
               }`}
             >
-              📚 Upload
+              Upload
             </Link>
             <Link
               to="/chat"
               className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
                 isActive('/chat') 
-                  ? 'bg-ghibli-sage text-white shadow-lg' 
-                  : 'bg-white text-gray-700 hover:bg-ghibli-cream shadow-md'
+                  ? 'bg-teal-600 text-white shadow-lg' 
+                  : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md border border-gray-200'
               }`}
             >
-              💬 Chat
+              Chat
             </Link>
           </div>
         </div>

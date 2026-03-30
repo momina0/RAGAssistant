@@ -19,6 +19,34 @@ class TextProcessor:
             is_separator_regex=False,
         )
     
+    def preprocess_query(self, query: str) -> str:
+        """
+        Preprocess and enhance query for better semantic matching.
+        Converts common question patterns to improve retrieval.
+        
+        Args:
+            query: Original user query
+            
+        Returns:
+            Enhanced query with better matching keywords
+        """
+        query_lower = query.lower().strip()
+        
+        # Expand "how to make" queries to include "recipe" for better matching
+        if "how to make" in query_lower or "how do i make" in query_lower:
+            # Extract the dish name after "how to make"
+            query = query + " recipe ingredients preparation"
+        
+        # Expand "how to cook" to include cooking-related terms
+        if "how to cook" in query_lower or "how do i cook" in query_lower:
+            query = query + " recipe cooking method"
+        
+        # Expand "what is" questions to be more descriptive
+        if query_lower.startswith("what is"):
+            query = query + " description about information"
+        
+        return query
+    
     def chunk_text(self, text: str) -> List[str]:
         """
         Split text into chunks for embedding and retrieval.

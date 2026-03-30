@@ -117,8 +117,13 @@ class RAGEngine:
             
             logger.info(f"Processing question: '{question[:100]}...'")
             
-            # Retrieve relevant documents
-            relevant_docs = vector_store_manager.similarity_search(question)
+            # Preprocess the query for better semantic matching
+            enhanced_query = text_processor.preprocess_query(question)
+            if enhanced_query != question:
+                logger.info(f"Enhanced query: '{enhanced_query[:100]}...'")
+            
+            # Retrieve relevant documents using enhanced query
+            relevant_docs = vector_store_manager.similarity_search(enhanced_query)
             
             if not relevant_docs:
                 logger.warning("No relevant documents found for the question")

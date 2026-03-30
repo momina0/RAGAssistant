@@ -21,7 +21,7 @@ A beautiful, context-aware AI chatbot with RAG (Retrieval-Augmented Generation) 
 ### ⚡ Backend
 - **RAG Pipeline**: LangChain orchestration for document retrieval and generation
 - **FAISS Vector Store**: Fast in-memory similarity search
-- **Groq Integration**: Lightning-fast inference with `llama-3.1-70b-versatile`
+- **Groq Integration**: Lightning-fast inference with `llama-3.3-70b-versatile`
 - **Strict Context Control**: Enforces answers ONLY from provided content
 - **Server-Sent Events**: Real-time streaming responses
 - **Clean Architecture**: Modular, testable, and maintainable code
@@ -157,12 +157,14 @@ RAGAssistant/
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
-MODEL_NAME=llama-3.1-70b-versatile
+MODEL_NAME=llama-3.3-70b-versatile
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 CHUNK_SIZE=1000
 CHUNK_OVERLAP=200
-TOP_K_RESULTS=3
+TOP_K_RESULTS=5
 ```
+
+**Note**: `TOP_K_RESULTS=5` retrieves more context for better answer quality, especially for varied question phrasings.
 
 ### Frontend Environment Variables (optional)
 
@@ -280,7 +282,7 @@ Deploy to platforms like:
 ### Backend
 - **FastAPI**: Modern Python web framework
 - **LangChain**: RAG orchestration
-- **Groq**: LLM inference (llama-3.1-70b-versatile)
+- **Groq**: LLM inference (llama-3.3-70b-versatile)
 - **FAISS**: Vector similarity search
 - **Sentence Transformers**: Embeddings (all-MiniLM-L6-v2)
 - **SSE-Starlette**: Server-Sent Events

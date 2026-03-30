@@ -7,7 +7,6 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ingestText, ingestFile } from '../services/api';
 import LoadingSpinner from './LoadingSpinner';
-import '../styles/ghibli.css';
 
 const KnowledgeInput = () => {
   const [text, setText] = useState('');
@@ -88,7 +87,7 @@ const KnowledgeInput = () => {
 
       setMessage({ 
         type: 'success', 
-        content: `✓ ${result.message} (${result.chunks_created} chunks created)` 
+        content: `${result.message} (${result.chunks_created} chunks created)` 
       });
       
       // Clear inputs after successful processing
@@ -119,11 +118,11 @@ const KnowledgeInput = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="watercolor-section card p-8 soft-shadow-hover">
+      <div className="card p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold ghibli-gradient-text mb-3">
-            Upload Knowledge 📚
+          <h2 className="text-4xl font-bold text-teal-700 mb-3">
+            Upload Knowledge
           </h2>
           <p className="text-gray-600 text-lg">
             Paste text or upload a .txt file to get started
@@ -147,9 +146,9 @@ const KnowledgeInput = () => {
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-6">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-ghibli-sage/30 to-transparent"></div>
+          <div className="flex-1 h-px bg-gray-300"></div>
           <span className="text-gray-500 font-medium">OR</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-ghibli-sage/30 to-transparent"></div>
+          <div className="flex-1 h-px bg-gray-300"></div>
         </div>
 
         {/* File Upload Section */}
@@ -158,11 +157,11 @@ const KnowledgeInput = () => {
             Upload a File
           </label>
           <div
-            className={`border-3 border-dashed rounded-3xl p-8 text-center transition-all duration-300 ${
+            className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
               dragActive 
-                ? 'border-ghibli-forest bg-ghibli-mint/20 scale-[1.02]' 
-                : 'border-ghibli-sage/40 bg-ghibli-cream/30'
-            } ${isProcessing || text ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-ghibli-mint/10'}`}
+                ? 'border-teal-500 bg-teal-50' 
+                : 'border-gray-300 bg-gray-50'
+            } ${isProcessing || text ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}`}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -178,10 +177,14 @@ const KnowledgeInput = () => {
               className="hidden"
             />
             
-            <div className="text-6xl mb-3 float-animation">📄</div>
+            <div className="text-5xl mb-3 text-gray-400">
+              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
             {file ? (
               <div>
-                <p className="text-ghibli-forest font-semibold text-lg mb-2">
+                <p className="text-teal-700 font-semibold text-lg mb-2">
                   Selected: {file.name}
                 </p>
                 <p className="text-gray-600 text-sm">
@@ -195,13 +198,13 @@ const KnowledgeInput = () => {
                   className="mt-3 text-red-500 hover:text-red-700 font-medium"
                   disabled={isProcessing}
                 >
-                  ✕ Remove
+                  Remove
                 </button>
               </div>
             ) : (
               <div>
                 <p className="text-gray-700 font-semibold text-lg mb-2">
-                  Drag & drop your .txt file here
+                  Drag and drop your .txt file here
                 </p>
                 <p className="text-gray-500 text-sm">
                   or click to browse (max 5MB)
@@ -214,10 +217,10 @@ const KnowledgeInput = () => {
         {/* Message Display */}
         {message.content && (
           <div 
-            className={`mb-6 p-4 rounded-2xl fade-in ${
+            className={`mb-6 p-4 rounded-xl fade-in ${
               message.type === 'success' 
-                ? 'bg-ghibli-mint/50 text-green-800 border-2 border-ghibli-forest/30' 
-                : 'bg-red-100 text-red-800 border-2 border-red-300'
+                ? 'bg-green-100 text-green-800 border border-green-300' 
+                : 'bg-red-100 text-red-800 border border-red-300'
             }`}
           >
             <p className="font-semibold">{message.content}</p>
@@ -233,23 +236,23 @@ const KnowledgeInput = () => {
           >
             {isProcessing ? (
               <>
-                <span className="inline-block animate-spin">⚙️</span>
+                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
                 Processing...
               </>
             ) : (
-              <>
-                <span className="paw-print"></span>
-                Process Content
-              </>
+              'Process Content'
             )}
           </button>
           
           {message.type === 'success' && (
             <button
               onClick={handleNavigateToChat}
-              className="btn-primary bg-ghibli-sky hover:bg-ghibli-sky/80 text-lg"
+              className="btn-primary bg-blue-500 hover:bg-blue-600 text-lg"
             >
-              Go to Chat 💬
+              Go to Chat
             </button>
           )}
         </div>
@@ -263,21 +266,21 @@ const KnowledgeInput = () => {
       </div>
 
       {/* Info Section */}
-      <div className="mt-8 card p-6 bg-gradient-to-br from-ghibli-lavender/20 to-ghibli-peach/20">
-        <h3 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
-          <span>💡</span> Tips for Best Results
+      <div className="mt-8 card p-6 bg-white">
+        <h3 className="font-bold text-gray-700 mb-3">
+          Tips for Best Results
         </h3>
         <ul className="space-y-2 text-gray-600">
           <li className="flex items-start gap-2">
-            <span className="text-ghibli-forest mt-1">•</span>
+            <span className="text-teal-600 mt-1">•</span>
             <span>Provide clear, well-structured content for better answers</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-ghibli-forest mt-1">•</span>
+            <span className="text-teal-600 mt-1">•</span>
             <span>The AI will ONLY answer from your uploaded content</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-ghibli-forest mt-1">•</span>
+            <span className="text-teal-600 mt-1">•</span>
             <span>Upload documentation, articles, notes, or any text-based knowledge</span>
           </li>
         </ul>
