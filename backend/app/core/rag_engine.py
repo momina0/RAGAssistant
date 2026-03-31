@@ -1,6 +1,4 @@
-"""
-RAG Engine - Core question answering logic
-"""
+
 from typing import Generator
 from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
