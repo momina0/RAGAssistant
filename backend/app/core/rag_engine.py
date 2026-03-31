@@ -48,7 +48,7 @@ class RAGEngine:
         # Find relevant documents
         docs = vector_store_manager.search(question)
         if not docs:
-            yield "I don't have enough information to answer that."
+            yield "I don't have the information about this."
             return
 
         # Build context and prompt
@@ -57,7 +57,7 @@ class RAGEngine:
 
         # Stream response
         for chunk in self.llm.stream(prompt):
-            if hasattr(chunk, 'content'):
+            if hasattr(chunk, 'content') and chunk.content:
                 yield chunk.content
 
     def health_check(self) -> dict:

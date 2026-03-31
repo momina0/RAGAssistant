@@ -14,6 +14,7 @@ const ChatInterface = () => {
   const [error, setError] = useState('');
   const messagesEndRef = useRef(null);
   const streamRef = useRef('');
+  const eventSourceRef = useRef(null);
 
   // Check if content exists on mount
   useEffect(() => {
@@ -27,6 +28,15 @@ const ChatInterface = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+      }
+    };
+  }, []);
+
   const handleSend = async () => {
     const question = input.trim();
     if (!question || isLoading) return;
@@ -36,35 +46,47 @@ const ChatInterface = () => {
       return;
     }
 
+    // Add user message
     setMessages(prev => [...prev, { role: 'user', content: question }]);
     setInput('');
     setError('');
     setIsLoading(true);
     streamRef.current = '';
 
-    askQuestion(
+    eventSourceRef.current = askQuestion(
       question,
       // On each token
       (token) => {
         streamRef.current += token;
+        const currentContent = streamRef.current;
+        
         setMessages(prev => {
-          const last = prev[prev.length - 1];
-          if (last?.role === 'ai') {
-            return [...prev.slice(0, -1), { role: 'ai', content: streamRef.current }];
+          const lastMsg = prev[prev.length - 1];
+          if (lastMsg?.role === 'ai') {
+            // Update existing AI message
+            const updated = [...prev];
+            updated[updated.length - 1] = { role: 'ai', content: currentContent };
+            return updated;
+          } else {
+            // Add new AI message
+            return [...prev, { role: 'ai', content: currentContent }];
           }
-          return [...prev, { role: 'ai', content: streamRef.current }];
         });
+        
+        setIsLoading(false); // Got first token, no longer "thinking"
       },
       // On complete
       () => {
         setIsLoading(false);
         streamRef.current = '';
+        eventSourceRef.current = null;
       },
       // On error
       (err) => {
         setIsLoading(false);
         setError(err.message || 'Failed to get response');
         streamRef.current = '';
+        eventSourceRef.current = null;
       }
     );
   };
@@ -122,7 +144,7 @@ const ChatInterface = () => {
             {messages.map((msg, i) => (
               <ChatMessage key={i} role={msg.role} content={msg.content} />
             ))}
-            {isLoading && messages[messages.length - 1]?.role === 'user' && (
+            {isLoading && (
               <div className="text-gray-500 text-sm">Thinking...</div>
             )}
             <div ref={messagesEndRef} />

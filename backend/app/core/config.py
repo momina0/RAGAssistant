@@ -45,7 +45,7 @@ class Settings:
     @property
     def prompt_template(self) -> str:
         return """Answer based ONLY on the following context.
-If the context doesn't contain the answer, say "I don't have enough information to answer that."
+If the context doesn't contain the answer, say exactly: "I don't have the information about this."
 
 Context:
 {context}

@@ -38,15 +38,18 @@ export const askQuestion = (question, onToken, onComplete, onError) => {
   const eventSource = new EventSource(url);
 
   eventSource.onmessage = (event) => {
-    if (event.data === '[DONE]') {
+    const data = event.data;
+    if (data === '[DONE]') {
       eventSource.close();
       onComplete();
-    } else {
-      onToken(event.data);
+    } else if (data && data.trim()) {
+      // Only pass non-empty tokens
+      onToken(data);
     }
   };
 
-  eventSource.onerror = () => {
+  eventSource.onerror = (error) => {
+    console.error('SSE Error:', error);
     eventSource.close();
     onError(new Error('Connection failed'));
   };
