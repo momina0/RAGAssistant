@@ -11,6 +11,7 @@ export default {
       },
       fontFamily: {
         sans: ['Quicksand', 'ui-rounded', 'system-ui', 'sans-serif'],
+        bubble: ['Fredoka', 'Quicksand', 'ui-rounded', 'sans-serif'],
       },
     },
   },
